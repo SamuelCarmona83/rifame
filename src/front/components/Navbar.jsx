@@ -14,7 +14,7 @@ export const Navbar = () => {
 						height="50" 
 						className="d-inline-block"
 					/>
-					<h1 className="navbar-brand mb-0 ms-2">Rifame</h1>
+					<h1 className="navbar-brand mb-0 ms-2" style={{fontSize:"40px", color:"#d90429"}}>Rifame</h1>
 				</Link>
 				
 				<button 
@@ -30,7 +30,7 @@ export const Navbar = () => {
 				</button>
 
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+					<ul className="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
 						<li className="nav-item dropdown">
 							<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								Inicio
