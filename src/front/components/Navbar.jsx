@@ -40,13 +40,13 @@ export const Navbar = () => {
 									<a className="dropdown-item" href="#scrollspyHeading1">Acerca de RIFAME</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#scrollspyHeading2">Preguntas Frecuentes</a>
+									<a className="dropdown-item" href="#scrollspyHeading2">Bienvenidos</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#">Crear una Pagina</a>
+									<a className="dropdown-item" href="#scrollspyHeading3">Plataforma Completa</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#">Centro de Ayuda</a>
+									<a className="dropdown-item" href="#scrollspyHeading4">Centro de Ayuda</a>
 								</li>
 							</ul>
 						</li>
