@@ -2,3 +2,16 @@
 *{
     font-family: "Winky Sans", sans-serif;
 }
+html {
+  min-height: 100%;
+  position: relative;
+}
+body { 
+    margin: 0;
+    margin-bottom: 96px; /* same as footer height */
+}
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
