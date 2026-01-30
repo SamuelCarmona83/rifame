@@ -15,3 +15,8 @@ footer{
     bottom: 0;
     width: 100%;
 }
+.input-sin-estilos:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: #d90429;
+}
