@@ -92,7 +92,7 @@ const Configuracion = () => {
                         <p className="ms-4 fs-5 text-danger pb-2 mb-0" >PORCENTAJE VENDIDO</p>
                         <h2 className="ms-4 mb-4 text-secondary" >Barra de Progreso</h2>
                         <p className="ms-4 text-secondary fs-5" >
-                            Pagos por transferencia ó depósito con Voucher <span className="text-danger fw-bold">(comprobante)</span> y pago online con verificación automática.
+                            Puedes configurar tu rifa condicionada a la venta del 80%, 90% o 100% de boletos. (Aplican restricciones)
                             <ul className="ms-3 mt-3">
                                 <li>Se ocultan fechas</li>
                                 <li>Se muestra arriba de la descripción</li>
@@ -136,7 +136,7 @@ const Configuracion = () => {
             <section className="container d-flex ps-5 pb-5">
                 <div>
                     <div>
-                        <p className="ms-4 fs-5 text-danger pb-2 mb-0" >Números de Regalo</p>
+                        <p className="ms-4 fs-5 text-danger pb-2 mb-0" >NUMEROS DE REGALO</p>
                         <h2 className="ms-4 mb-4 text-secondary" >Sistema de Oportunidades</h2>
                         <p className="ms-4 text-secondary fs-5" >
                             Elige la cantidad de tickets de regalo que tendrán tus usuarios eligiendo un boleto.
@@ -160,7 +160,7 @@ const Configuracion = () => {
             <section className="container d-flex ps-5 pb-5">
                 <div>
                     <div>
-                        <p className="ms-4 fs-5 text-danger pb-2 mb-0" >Vende más tickets</p>
+                        <p className="ms-4 fs-5 text-danger pb-2 mb-0" >VENDE MAS TICKETS</p>
                         <h2 className="ms-4 mb-4 text-secondary" >Sistema de Descuentos</h2>
                         <p className="ms-4 text-secondary fs-5" >
                             Gracias a nuestro algoritmo puedes configurar a tu gusto el porcentaje de descuentos.
@@ -177,6 +177,29 @@ const Configuracion = () => {
                     <h2 className="text-success text-opacity-25">Aquí va la imagen de la sección de VENDE MAS TICKETS</h2>
                 </div>  
             </section>
+
+
+            {/*Sección VENDE MAS TICKETS*/}
+            <section className="container d-flex ps-5 pb-5">
+                <div>
+                    <div>
+                        <p className="ms-4 fs-5 text-danger pb-2 mb-0" >OFERTAS DE BOLETOS</p>
+                        <h2 className="ms-4 mb-4 text-secondary" >Sistema de Promociones</h2>
+                        <p className="ms-4 text-secondary fs-5" >
+                            Podrás ofrecer promociones de 2×1 (comprando un boleto el segundo es gratis), 3×2, 4×3, 5×4…
+                            <ul className="ms-3 mt-3">
+                                <li>Descuento en el precio al instante.</li>
+                                <li>Descuento en el precio al instante.</li>
+                                <li>Se puede actualizar en cualquier momento.</li>
+                            </ul>                
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 className="text-success text-opacity-25">Aquí va la imagen de la sección de VENDE MAS TICKETS</h2>
+                </div>  
+            </section>         
             
             
             
