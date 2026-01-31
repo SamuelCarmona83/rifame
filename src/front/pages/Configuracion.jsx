@@ -1,4 +1,4 @@
-const fondo1 = "/red-curved-sheets-paper.jpg";
+const fondo1 = "/red_wavy_with_halftone_background.jpg";
 
 
 const Configuracion = () => {
@@ -11,7 +11,7 @@ const Configuracion = () => {
                 <div 
                     className="d-flex justify-content-center align-items-center bg-opacity-50 gt3-page-title_wrapper mb-5" 
                     style={{height:"200px", backgroundImage: `url(${fondo1})`, backgroundSize: "cover", backgroundPosition: "center" }} >
-                    <h1 className="text-white fw-bold ">Configuraciones</h1> 
+                    <h1 className="text-dark fw-bold ">Configuraciones</h1> 
                 </div>
             </section>
 
