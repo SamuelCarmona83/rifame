@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 
 const SistemaPagina = () => {
     return (
@@ -100,9 +102,12 @@ const SistemaPagina = () => {
                     <p className="fs-5 mb-4">
                         Empieza a gestionar rifas de forma pro.
                     </p>
-                    <button className="btn btn-light btn-lg rounded-5 px-5">
+                    <Link 
+                    to="/crear-rifa"
+                    className="btn btn-light btn-lg rounded-5 px-5"
+                        style={{ textDecoration: "none"}}>
                         Crear mi primera Rifa
-                    </button>
+                    </Link>
                 </div>
             </section>
             <section className="text-center mb-5">
