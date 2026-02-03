@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
 
 export const Navbar = () => {
+	const handleLinkClick = () => {
+		const navbarCollapse = document.getElementById('navbarSupportedContent');
+		const navbarToggler = document.querySelector('.navbar-toggler');
+
+		if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+			navbarToggler?.click();
+		}
+	};
+
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary">
 			<div className="container-fluid px-3 px-md-4">
@@ -40,21 +49,21 @@ export const Navbar = () => {
 							</a>
 							<ul className="dropdown-menu">
 								<li>
-									<a className="dropdown-item" href="#scrollspyHeading1">Acerca de RIFAME</a>
+									<a className="dropdown-item" href="#scrollspyHeading1" onClick={handleLinkClick}>Acerca de RIFAME</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#scrollspyHeading2">Bienvenidos</a>
+									<a className="dropdown-item" href="#scrollspyHeading2" onClick={handleLinkClick}>Bienvenidos</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#scrollspyHeading3">Plataforma Completa</a>
+									<a className="dropdown-item" href="#scrollspyHeading3" onClick={handleLinkClick}>Plataforma Completa</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#scrollspyHeading4">Promociones</a>
+									<a className="dropdown-item" href="#scrollspyHeading4" onClick={handleLinkClick}>Promociones</a>
 								</li>
 							</ul>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" aria-current="page" to="/sistema-pagina">Sistema</Link>
+							<Link className="nav-link" aria-current="page" to="/sistema-pagina" onClick={handleLinkClick}>Sistema</Link>
 						</li>
 
 						<li className="nav-item dropdown">
@@ -63,16 +72,16 @@ export const Navbar = () => {
 							</a>
 							<ul className="dropdown-menu">
 								<li>
-									<a className="dropdown-item" href="scrollspyHeading1">Pagina Web Personalizada</a>
+									<a className="dropdown-item" href="scrollspyHeading1" onClick={handleLinkClick}>Pagina Web Personalizada</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="scrollspyHeading1">Velocidad Garantizada</a>
+									<a className="dropdown-item" href="scrollspyHeading1" onClick={handleLinkClick}>Velocidad Garantizada</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="scrollspyHeading1">Paginado de Tickets</a>
+									<a className="dropdown-item" href="scrollspyHeading1" onClick={handleLinkClick}>Paginado de Tickets</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="scrollspyHeading1">Página Adaptable</a>
+									<a className="dropdown-item" href="scrollspyHeading1" onClick={handleLinkClick}>Página Adaptable</a>
 								</li>
 							</ul>
 						</li>
@@ -84,26 +93,26 @@ export const Navbar = () => {
 
 							<ul className="dropdown-menu">
 								<li>
-									<Link to="/configuracion" className="dropdown-item">
+									<Link to="/configuracion" className="dropdown-item" onClick={handleLinkClick}>
 										Configuraciones
 									</Link>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#">Dominio Wep Propio</a>
+									<a className="dropdown-item" href="#" onClick={handleLinkClick}>Dominio Wep Propio</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#">Sistema de Pagos</a>
+									<a className="dropdown-item" href="#" onClick={handleLinkClick}>Sistema de Pagos</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#">Sistema de Vendedores</a>
+									<a className="dropdown-item" href="#" onClick={handleLinkClick}>Sistema de Vendedores</a>
 								</li>
 								<li>
-									<a className="dropdown-item" href="#">Carga de Comprobante</a>
+									<a className="dropdown-item" href="#" onClick={handleLinkClick}>Carga de Comprobante</a>
 								</li>
 							</ul>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link text-white bg-danger rounded-5 mx-lg-2 px-3 mt-2 mt-lg-0 text-center" to="/crear-rifa">Crear Rifa</Link>
+							<Link className="nav-link text-white bg-danger rounded-5 mx-lg-2 px-3 mt-2 mt-lg-0 text-center" to="/crear-rifa" onClick={handleLinkClick}>Crear Rifa</Link>
 						</li>
 					</ul>
 				</div>
