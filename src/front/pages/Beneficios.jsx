@@ -1,0 +1,66 @@
+const fondo1 = "/red_wavy_with_halftone_background.jpg";
+
+
+const Beneficios = () => {
+
+    return ( 
+        <>
+                <section>
+                    <div
+                        className="d-flex justify-content-center align-items-center bg-opacity-50 gt3-page-title_wrapper mb-5"
+                        style={{ height: "200px", backgroundImage: `url(${fondo1})`, backgroundSize: "cover", backgroundPosition: "center" }} >
+                        <h1 className="text-dark fw-bold ">Beneficios</h1>
+                    </div>
+                </section>
+
+                <section className="container d-flex ps-5 pb-5">    
+                <div>
+                    <h5 className="text-dark mb-4">Beneficios de nuestro sistema</h5>
+                    <div>
+                        <p className="ms-4 fs-5 text-danger pb-2 mb-0" >LANDING PAGE</p>
+                        <h2 className="ms-4 mb-4 text-secondary" >Paga Web a medida</h2>
+                        <p className="ms-4 text-secondary fs-5" >En tan solo unas horas tendrás tu propia página web lista para empezar a vender tus tickets. 
+                            <ul className="ms-3 mt-3">
+                                <li>Con tu Logo</li>
+                                <li>Con tus Colores</li>
+                                <li>Con tus Dinamica</li>
+                                <li>Con tu Datos</li>
+                            </ul>                
+                        </p>
+                    </div>
+                </div>
+
+                 <div>
+                    <h2 className="text-success text-opacity-25">Aquí va la imagen de la sección de configuracines</h2>
+                </div>                
+            </section>
+
+            <section className="container d-flex ps-5 pb-5">
+                <div>
+                    <div>
+                        <p className="ms-4 fs-5 text-danger pb-2 mb-0" >RAPIDEZ</p>
+                        <h2 className="ms-4 mb-4 text-secondary" >Velocidad Garantizada</h2>
+                        <p className="ms-4 text-secondary fs-5" >
+                            Gracias a nuestros nuevos algoritmos e infraestructura totalmente optimizada… 
+                            <ul className="ms-3 mt-3">
+                                <li>Todas las Numeraciones</li>
+                                <li>Todas las Configuraciones</li>
+                                <li>Toda la Administración</li>
+                            </ul>                
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 className="text-success text-opacity-25">Aquí va la imagen de la sección DE ELEGIBLE</h2>
+                </div>  
+            </section>
+                </>
+
+                
+                );
+            
+};
+
+
+            export default Beneficios;

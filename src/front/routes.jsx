@@ -12,7 +12,11 @@ import { Demo } from "./pages/Demo";
 import CrearRifa from "./pages/CrearRifa";
 import RegistrodeUsuario from "./pages/RegistrodeUsuario.jsx";
 import SistemaPagina from "./pages/SistemaPagina.jsx";
+
+import Beneficios from "./pages/Beneficios.jsx";
+
 import Configuracion from "./pages/Configuracion.jsx";
+
 
 import Login from "./pages/Login.jsx";
 import ResetPassword from "./pages/ResetPassword.jsx";
@@ -39,6 +43,7 @@ export const router = createBrowserRouter(
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/comprar-ticket" element={<ComprarTicket />} />
       <Route path="/configuracion" element={<Configuracion />} />
+      <Route path="/beneficios" element={<Beneficios />} />
     </Route>
   )
 )
