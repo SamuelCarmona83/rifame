@@ -29,14 +29,21 @@ class User(db.Model):
     
 class Rifa(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=False)
-    User: Mapped["User"] = relationship(backref="rifas")
+    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'), nullable=True)
+    User: Mapped["User"] = relationship(backref="rifa")
     titulo: Mapped[str] = mapped_column(String(100), nullable=False)
     descripcion: Mapped[str] = mapped_column(String(255), nullable=True)
+    cantidad_tickets: Mapped[int] = mapped_column(nullable=False)
     precio_ticket: Mapped[float] = mapped_column(nullable=False)
     loteria: Mapped[str] = mapped_column(String(50), nullable=False)
     fecha_sorteo: Mapped[str] = mapped_column(String(50), nullable=False)
     imagen: Mapped[str] = mapped_column(String(255), nullable=True)
+    metodo_pagos: Mapped[str] = mapped_column(String(100), nullable=True)
+    titular_zelle: Mapped[str] = mapped_column(String(100), nullable=True)
+    contacto_zelle: Mapped[str] = mapped_column(String(100), nullable=True)
+    titular_transferencia: Mapped[str] = mapped_column(String(100), nullable=True)
+    numero_ruta: Mapped[str] = mapped_column(String(50), nullable=True)
+    numero_cuenta: Mapped[str] = mapped_column(String(50), nullable=True)
 
 
     def serialize(self):
@@ -48,6 +55,12 @@ class Rifa(db.Model):
             "loteria": self.loteria,
             "fecha_sorteo": self.fecha_sorteo,
             "imagen": self.imagen,
+            "metodo_pagos": self.metodo_pagos,
+            "titular_zelle": self.titular_zelle,
+            "contacto_zelle": self.contacto_zelle,
+            "titular_transferencia": self.titular_transferencia,
+            "numero_ruta": self.numero_ruta,
+            "numero_cuenta": self.numero_cuenta
         }
     
 class Ticket(db.Model):

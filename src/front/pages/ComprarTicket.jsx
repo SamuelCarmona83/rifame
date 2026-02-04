@@ -82,7 +82,7 @@ export const ComprarTicket = () => {
                 <div className="row g-4">
                     <div className="col-12 col-lg-6 text-center">
                         <img 
-                            src="src/front/assets/img/bannerdemoc-12.jpg" 
+                            src="src/front/assets/img/plantilla-rifa-ejemplo.jpg" 
                             alt="Banner Comprar Ticket"
                             className="img-fluid rounded-5" 
                             style={{boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', maxWidth: '100%'}} 
