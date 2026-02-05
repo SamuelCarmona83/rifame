@@ -1,76 +1,45 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import  useGlobalReducer  from "../hooks/useGlobalReducer";
+import { getRifas } from "../actions.js";
 
 const Dashboard = () => {
-    const { user } = useAuth();
+    const { store, dispatch } = useGlobalReducer();
+    const { user, rifas } = store;
+
     const [stats, setStats] = useState({
         totalRifas: 0,
         rifasActivas: 0,
         totalVentas: 0,
         pagosPendientes: 0
     });
-    const [rifasRecientes, setRifasRecientes] = useState([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (user?.id) {
-            fetchDashboardData();
+        // Obtener rifas del usuario
+        if (user) {
+            getRifas(dispatch, user.id, store.token);
         }
     }, [user]);
 
-    const fetchDashboardData = async () => {
-        const token = localStorage.getItem("token");
-        
-        if (!user?.id) {
-            setLoading(false);
-            return;
-        }
-        
-        try {
-            // Obtener rifas del usuario
-            const response = await fetch(
-                `${import.meta.env.VITE_BACKEND_URL}/api/rifa/${user.id}`,
-                {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                }
-            );
+    useEffect(() => {
+        // Calcular estadísticas
+        const totalRifas = rifas.length;
+        const rifasActivas = rifas.filter(rifa => new Date(rifa.fecha_sorteo) > new Date()).length;
+        const totalVentas = rifas.reduce((sum, rifa) => sum + (rifa.tickets_vendidos || 0), 0);
+        const pagosPendientes = rifas.reduce((sum, rifa) => sum + (rifa.pagos_pendientes || 0), 0);
 
-            if (response.ok) {
-                const rifas = await response.json();
-                
-                // Calcular estadísticas
-                const ahora = new Date();
-                const rifasActivas = rifas.filter(r => new Date(r.fecha_sorteo) > ahora);
-                
-                setStats({
-                    totalRifas: rifas.length,
-                    rifasActivas: rifasActivas.length,
-                    totalVentas: rifas.reduce((sum, r) => sum + (r.tickets_vendidos || 0), 0),
-                    pagoPendientes: rifas.reduce((sum, r) => sum + (r.pagos_pendientes || 0), 0)
-                });
+        setStats({
+            totalRifas,
+            rifasActivas,
+            totalVentas,
+            pagosPendientes
+        });
+    }, [rifas]);
 
-                // Rifas más recientes (últimas 5)
-                setRifasRecientes(rifas.slice(0, 5));
-            }
-        } catch (error) {
-            console.error("Error al cargar datos:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const rifasRecientes = rifas
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 5);
 
-    if (loading) {
-        return (
-            <div className="container mt-5 text-center">
-                <div className="spinner-border text-danger" role="status">
-                    <span className="visually-hidden">Cargando...</span>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="container mt-4">

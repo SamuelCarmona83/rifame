@@ -1,29 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import  useGlobalReducer from "../hooks/useGlobalReducer";
+import { logout } from "../actions.js";
 
 export const Navbar = () => {
+
 	const navigate = useNavigate();
-	const { user, isAuthenticated, logout } = useAuth();
 
-	//NO UTILIZAR!!!!
-	const handleLinkClick = () => {
-		const navbarCollapse = document.getElementById('navbarSupportedContent');
-		const navbarToggler = document.querySelector('.navbar-toggler');
-
-		if (navbarCollapse && navbarCollapse.classList.contains('show')) {
-			navbarToggler?.click();
-		}
-	};
+	const { store, dispatch } = useGlobalReducer();
 
 	const handleLogout = () => {
-		logout();
-		handleLinkClick();
+		logout(dispatch);
 		navigate("/");
 	};
-
-	// Debug: Ver el estado actual
-	console.log("Navbar - isAuthenticated:", isAuthenticated);
-	console.log("Navbar - user:", user);
 
 	return (
 		<nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -59,7 +47,7 @@ export const Navbar = () => {
 				<div className="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul className="navbar-nav ms-auto mb-2 mb-lg-0 fs-6 fs-lg-5">
 						{/* MENÚ CUANDO NO ESTÁ AUTENTICADO */}
-						{!user && (
+						{!store.user && (
 							<>
 								<li className="nav-item dropdown">
 									<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -67,21 +55,21 @@ export const Navbar = () => {
 									</a>
 									<ul className="dropdown-menu">
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading1" onClick={handleLinkClick}>Acerca de RIFAME</a>
+											<a className="dropdown-item" href="#scrollspyHeading1">Acerca de RIFAME</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading2" onClick={handleLinkClick}>Bienvenidos</a>
+											<a className="dropdown-item" href="#scrollspyHeading2">Bienvenidos</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading3" onClick={handleLinkClick}>Plataforma Completa</a>
+											<a className="dropdown-item" href="#scrollspyHeading3">Plataforma Completa</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading4" onClick={handleLinkClick}>Promociones</a>
+											<a className="dropdown-item" href="#scrollspyHeading4">Promociones</a>
 										</li>
 									</ul>
 								</li>
 								<li className="nav-item">
-									<Link className="nav-link" aria-current="page" to="/sistema-pagina" onClick={handleLinkClick}>
+									<Link className="nav-link" to="/sistema-pagina">
 										Sistema
 									</Link>
 								</li>
@@ -91,16 +79,16 @@ export const Navbar = () => {
 									</a>
 									<ul className="dropdown-menu">
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading1" onClick={handleLinkClick}>Pagina Web Personalizada</a>
+											<a className="dropdown-item" href="#scrollspyHeading1">Pagina Web Personalizada</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading1" onClick={handleLinkClick}>Velocidad Garantizada</a>
+											<a className="dropdown-item" href="#scrollspyHeading1">Velocidad Garantizada</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading1" onClick={handleLinkClick}>Paginado de Tickets</a>
+											<a className="dropdown-item" href="#scrollspyHeading1">Paginado de Tickets</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#scrollspyHeading1" onClick={handleLinkClick}>Página Adaptable</a>
+											<a className="dropdown-item" href="#scrollspyHeading1">Página Adaptable</a>
 										</li>
 									</ul>
 								</li>
@@ -110,29 +98,28 @@ export const Navbar = () => {
 									</a>
 									<ul className="dropdown-menu">
 										<li>
-											<Link to="/configuracion" className="dropdown-item" onClick={handleLinkClick}>
+											<Link to="/configuracion" className="dropdown-item">
 												Configuraciones
 											</Link>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#" onClick={handleLinkClick}>Dominio Web Propio</a>
+											<a className="dropdown-item" href="#">Dominio Web Propio</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#" onClick={handleLinkClick}>Sistema de Pagos</a>
+											<a className="dropdown-item" href="#">Sistema de Pagos</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#" onClick={handleLinkClick}>Sistema de Vendedores</a>
+											<a className="dropdown-item" href="#">Sistema de Vendedores</a>
 										</li>
 										<li>
-											<a className="dropdown-item" href="#" onClick={handleLinkClick}>Carga de Comprobante</a>
+											<a className="dropdown-item" href="#">Carga de Comprobante</a>
 										</li>
 									</ul>
 								</li>
 								<li className="nav-item">
 									<Link 
 										className="nav-link text-white bg-danger rounded-5 mx-lg-2 px-3 mt-2 mt-lg-0 text-center" 
-										to="/login" 
-										onClick={handleLinkClick}
+										to="/login"
 									>
 										Iniciar Sesión
 									</Link>
@@ -141,45 +128,39 @@ export const Navbar = () => {
 						)}
 
 						{/* MENÚ CUANDO ESTÁ AUTENTICADO */}
-						{user && (
+						{store.user && (
 							<>
-								{/* Dashboard */}
 								<li className="nav-item">
-									<Link className="nav-link" to="/dashboard" onClick={handleLinkClick}>
+									<Link className="nav-link" to="/dashboard">
 										<i className="fa-solid fa-house me-1"></i>
 										Inicio
 									</Link>
 								</li>
 
-								{/* Mis Rifas */}
 								<li className="nav-item">
-									<Link className="nav-link" to="/mis-rifas" onClick={handleLinkClick}>
+									<Link className="nav-link" to="/mis-rifas">
 										<i className="fa-solid fa-ticket me-1"></i>
 										Mis Rifas
 									</Link>
 								</li>
 
-								{/* Pagos */}
 								<li className="nav-item">
-									<Link className="nav-link" to="/pagos" onClick={handleLinkClick}>
+									<Link className="nav-link" to="/pagos">
 										<i className="fa-solid fa-money-bill me-1"></i>
 										Pagos
 									</Link>
 								</li>
 
-								{/* Crear Rifa */}
 								<li className="nav-item">
 									<Link 
 										className="nav-link text-white bg-danger rounded-5 mx-lg-2 px-3 mt-2 mt-lg-0 text-center" 
-										to="/crear-rifa" 
-										onClick={handleLinkClick}
+										to="/crear-rifa"
 									>
 										<i className="fa-solid fa-plus me-1"></i>
 										Crear Rifa
 									</Link>
 								</li>
 
-								{/* Menú de Usuario */}
 								<li className="nav-item dropdown">
 									<a 
 										className="nav-link dropdown-toggle d-flex align-items-center" 
@@ -189,32 +170,27 @@ export const Navbar = () => {
 										aria-expanded="false"
 									>
 										<i className="fa-solid fa-user-circle me-2"></i>
-										{user?.nombre || "Usuario"}
+										{store.user?.nombre || "Usuario"}
 									</a>
 									<ul className="dropdown-menu dropdown-menu-end">
 										<li>
 											<div className="dropdown-item-text">
-												<strong>{user?.nombre} {user?.apellido}</strong>
+												<strong>{store.user?.nombre} {store.user?.apellido}</strong>
 												<br />
-												<small className="text-muted">{user?.email}</small>
+												<small className="text-muted">{store.user?.email}</small>
 											</div>
 										</li>
 										<li><hr className="dropdown-divider" /></li>
 										<li>
-											<Link to="/perfil" className="dropdown-item" onClick={handleLinkClick}>
+											<Link to="/perfil" className="dropdown-item">
 												<i className="fa-solid fa-user me-2"></i>Mi Perfil
 											</Link>
 										</li>
-										<li>
-											<Link to="/configuracion" className="dropdown-item" onClick={handleLinkClick}>
-												<i className="fa-solid fa-gear me-2"></i>Configuración
-											</Link>
-										</li>
-										{user?.admin && (
+										{store.user?.admin && (
 											<>
 												<li><hr className="dropdown-divider" /></li>
 												<li>
-													<Link to="/admin" className="dropdown-item text-danger" onClick={handleLinkClick}>
+													<Link to="/admin" className="dropdown-item text-danger">
 														<i className="fa-solid fa-shield-halved me-2"></i>Panel Admin
 													</Link>
 												</li>

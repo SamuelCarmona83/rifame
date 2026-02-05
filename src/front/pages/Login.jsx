@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../hooks/useAuth";
+import  useGlobalReducer  from "../hooks/useGlobalReducer";
+import { login } from "../actions.js";
 
 export const Login = () => {
     const navigate = useNavigate();
-    const { login } = useAuth(); // Usar la función login del hook
+    const { dispatch } = useGlobalReducer();
     
     const [formData, setFormData] = useState({
         email: "",
@@ -38,41 +39,17 @@ export const Login = () => {
 
         setLoading(true);
 
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: formData.email,
-                    contrasena: formData.contrasena
-                })
-            });
+        // Llamar a la acción de login
+        const result = await login(dispatch, formData.email, formData.contrasena);
 
-            const data = await response.json();
-
-            if (!response.ok) {
-                setError(data.msg || "Error al iniciar sesión");
-                setLoading(false);
-                return;
-            }
-
-            // ✅ USAR LA FUNCIÓN LOGIN DEL HOOK
-            login(data.access_token, data.user);
-
-            // Mostrar mensaje de éxito
-            console.log("Login exitoso:", data.user);
-
-            // Redirigir al dashboard
+        if (result.success) {
+            console.log("Login exitoso");
             navigate("/dashboard");
-            
-        } catch (err) {
-            setError("Error de conexión con el servidor.");
-            console.error("Error:", err);
-        } finally {
-            setLoading(false);
+        } else {
+            setError(result.message);
         }
+
+        setLoading(false);
     };
 
     return (

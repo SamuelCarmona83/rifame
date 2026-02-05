@@ -23,7 +23,8 @@ def reqVal(body, keys):
     vals = []
     for key in keys:
         if key not in body:
-            raise APIException(f'You need to specify the {key}', status_code=400)
+            raise APIException(
+                f'You need to specify the {key}', status_code=400)
         vals.append(body[key])
     return vals
 
@@ -38,24 +39,24 @@ def login():
     """Endpoint para hacer login y obtener el token JWT"""
     email = request.json.get("email", None)
     contrasena = request.json.get("contrasena", None)
-    
+
     if not email or not contrasena:
         return jsonify({"msg": "Email y contraseña son requeridos"}), 400
-    
+
     # Buscar usuario en la base de datos
     user = User.query.filter_by(email=email).first()
-    
+
     # Verificar credenciales
     if user is None or user.contrasena != contrasena:
         return jsonify({"msg": "Email o contraseña incorrectos"}), 401
-    
+
     # Verificar si está activo
     if not user.is_active:
         return jsonify({"msg": "Usuario inactivo"}), 401
-    
+
     # Crear token con el ID del usuario
     access_token = create_access_token(identity=str(user.id))
-    
+
     return jsonify({
         "access_token": access_token,
         "user": user.serialize()
@@ -68,6 +69,7 @@ def login():
 
 
 @api.route('/user', methods=['GET'])
+@jwt_required()  # Proteger esta ruta
 def get_users():
     """Obtener todos los usuarios"""
     users = User.query.all()
@@ -95,22 +97,23 @@ def create_user():
     db.session.add(user)
     try:
         db.session.commit()
-        
+
         # Crear token automáticamente después del registro
         access_token = create_access_token(identity=str(user.id))
-        
+
         return jsonify({
             "message": "Usuario creado exitosamente",
             "access_token": access_token,
             "user": user.serialize()
         }), 201
-        
+
     except IntegrityError as e:
         db.session.rollback()
         return jsonify({"message": "El correo electrónico ya existe."}), 400
 
 
 @api.route('/user/<int:user_id>', methods=['GET'])
+@jwt_required()  # Proteger esta ruta
 def get_user(user_id):
     """Obtener un usuario específico"""
     user = User.query.get(user_id)
@@ -124,17 +127,17 @@ def get_user(user_id):
 def update_user(user_id):
     """Actualizar un usuario"""
     current_user_id = get_jwt_identity()
-    
+    current_user_id = int(current_user_id)  # Convertir a entero
     # Solo puede actualizar su propio perfil
     if current_user_id != user_id:
         return jsonify({"message": "No autorizado"}), 403
-    
+
     user = User.query.get(user_id)
     if user is None:
         return jsonify({"message": "Usuario no encontrado."}), 404
 
     body = request.get_json()
-    
+
     # Permitir actualización parcial de campos
     if 'nombre' in body:
         user.nombre = body['nombre']
@@ -166,11 +169,12 @@ def update_user(user_id):
 def get_rifas_by_user(user_id):
     """Obtener todas las rifas de un usuario específico"""
     current_user_id = get_jwt_identity()
-    
+    current_user_id = int(current_user_id)  # Convertir a entero
+
     # Solo puede ver sus propias rifas
-    if current_user_id != str(user_id):
+    if current_user_id != user_id:
         return jsonify({"message": "No autorizado"}), 403
-    
+
     rifas = Rifa.query.filter_by(user_id=user_id).all()
     rifas = [rifa.serialize() for rifa in rifas]
     return jsonify(rifas), 200
@@ -182,20 +186,22 @@ def crear_rifa():
     # Obtener el ID del usuario autenticado del token
     current_user_id = get_jwt_identity()
     current_user_id = int(current_user_id)  # Convertir a entero
-    
+
     # Verificar que el usuario existe
     if not current_user_id:
         return jsonify({"msg": "Usuario no autenticado"}), 401
-    
+
     user = User.query.get(current_user_id)
     if not user:
         return jsonify({"msg": "Usuario no encontrado"}), 404
 
     # Obtener los datos del body
     body = request.get_json()
-    keys = ['titulo', 'descripcion', 'cantidad_tickets', 'precio_ticket', 'loteria', 'fecha_sorteo']
-    titulo, descripcion, cantidad_tickets, precio_ticket, loteria, fecha_sorteo = reqVal(body, keys)
-    
+    keys = ['titulo', 'descripcion', 'cantidad_tickets',
+            'precio_ticket', 'loteria', 'fecha_sorteo']
+    titulo, descripcion, cantidad_tickets, precio_ticket, loteria, fecha_sorteo = reqVal(
+        body, keys)
+
     # AHORA SÍ crear el objeto Rifa
     rifa = Rifa()
     rifa.user_id = current_user_id  # ✅ Ahora sí existe rifa
@@ -212,7 +218,7 @@ def crear_rifa():
     rifa.titular_transferencia = body.get('titular_transferencia', None)
     rifa.numero_ruta = body.get('numero_ruta', None)
     rifa.numero_cuenta = body.get('numero_cuenta', None)
-    
+
     db.session.add(rifa)
     db.session.commit()
 
@@ -225,18 +231,18 @@ def eliminar_rifa(rifa_id):
     # Obtener el ID del usuario autenticado del token
     current_user_id = get_jwt_identity()
     current_user_id = int(current_user_id)  # Convertir a entero
-    
+
     rifa = Rifa.query.get(rifa_id)
     if rifa is None:
         return jsonify({"message": "Rifa no encontrada."}), 404
-    
+
     # Verificar que el usuario autenticado es el dueño de la rifa
     if rifa.user_id != current_user_id:
         return jsonify({"message": "No autorizado"}), 403
-    
+
     db.session.delete(rifa)
     db.session.commit()
-    
+
     return jsonify({"message": "Rifa eliminada exitosamente."}), 200
 
 
@@ -286,4 +292,52 @@ def editar_rifa(rifa_id):
     return jsonify(rifa.serialize()), 200
 
 
-# ==========================================
+# @api.route('/rifa/<int:user_id>/<int:rifa_id>', methods=['GET'])
+# @jwt_required()  # Proteger la ruta
+# def get_rifa_detail(user_id, rifa_id):
+#     """Obtener los detalles de una rifa específica de un usuario"""
+#     current_user_id = get_jwt_identity()
+#     current_user_id = int(current_user_id)  # Convertir a entero
+
+#     # Solo puede ver sus propias rifas
+#     if current_user_id != user_id:
+#         return jsonify({"message": "No autorizado"}), 403
+
+#     rifa = Rifa.query.filter_by(id=rifa_id, user_id=user_id).first()
+#     if rifa is None:
+#         return jsonify({"message": "Rifa no encontrada."}), 404
+
+#     return jsonify(rifa.serialize()), 200
+
+
+@api.route('/rifa/publica/<int:rifa_id>', methods=['GET'])
+def get_rifa_publica(rifa_id):
+    """Obtener detalles públicos de una rifa (sin autenticación)"""
+    try:
+        rifa = Rifa.query.get(rifa_id)
+
+        if not rifa:
+            return jsonify({"error": "Rifa no encontrada"}), 404
+
+        # Formatear fecha correctamente
+        fecha_sorteo = None
+        if rifa.fecha_sorteo:
+            if isinstance(rifa.fecha_sorteo, str):
+                fecha_sorteo = rifa.fecha_sorteo  # Ya es string
+            else:
+                fecha_sorteo = rifa.fecha_sorteo.isoformat()  # Convertir datetime a string
+
+        return jsonify({
+            "id": rifa.id,
+            "titulo": rifa.titulo,
+            "descripcion": rifa.descripcion,
+            "imagen": rifa.imagen,
+            "precio_ticket": float(rifa.precio_ticket) if rifa.precio_ticket else 0,
+            "cantidad_tickets": rifa.cantidad_tickets,
+            "fecha_sorteo": fecha_sorteo,
+            "activa": rifa.activa if hasattr(rifa, 'activa') else True
+        }), 200
+
+    except Exception as e:
+        print(f"Error en get_rifa_publica: {str(e)}")  # Debug
+        return jsonify({"error": str(e)}), 500

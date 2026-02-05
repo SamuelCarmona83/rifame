@@ -14,7 +14,7 @@ import RegistrodeUsuario from "./pages/RegistrodeUsuario.jsx";
 import SistemaPagina from "./pages/SistemaPagina.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import MisRifas from "./components/MisRifas.jsx";
-import Pagos from "./components/Pagos.jsx";
+// import Pagos from "./components/Pagos.jsx";
 
 
 import Beneficios from "./pages/Beneficios.jsx";
@@ -47,12 +47,12 @@ export const router = createBrowserRouter(
       <Route path="/sistema-pagina" element={<SistemaPagina />} />
       <Route path="/login" element={<Login />} />
       <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/comprar-ticket" element={<ComprarTicket />} />
+      <Route path="/comprar-ticket/:rifaId" element={<ComprarTicket />} />
       <Route path="/configuracion" element={<Configuracion />} />
       <Route path="/beneficios" element={<Beneficios />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/mis-rifas" element={<MisRifas />} />
-      <Route path="/pagos" element={<Pagos />} />
+      {/* <Route path="/pagos" element={<Pagos />} /> */}
       <Route path="/admin-panel" element={<AdminPanel />} />
       <Route path="/detalle-rifa" element={<DetalleRifa />} />
     </Route>
