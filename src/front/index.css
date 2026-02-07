@@ -8,10 +8,16 @@ html {
 }
 body { 
     margin: 0;
-    margin-bottom: 96px; /* same as footer height */
 }
 footer{
-    position: absolute;
-    bottom: 0;
     width: 100%;
+    margin-top: auto;
+}
+.input-sin-estilos:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: #d90429;
+}
+.hover-container:hover .hover-button {
+    opacity: 0.9 !important;
 }
